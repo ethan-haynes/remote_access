@@ -4,8 +4,12 @@ LABEL maintainer="Ethan Haynes <ethanhaynes@alumni.harvard.edu>"
 
 RUN mkdir /etc/remote_access
 
-COPY getdiskusage.py /etc/remote_access/getdiskusage.py
+COPY *.py /etc/remote_access/
+COPY requirements.txt /etc/remote_access/
 
-EXPOSE 9999
+EXPOSE 5000
 
-CMD ["python3", "/etc/remote-tools/getdiskusage.py"]
+WORKDIR /etc/remote_access
+RUN pip3 install -r requirements.txt
+
+CMD ["flask", "run", "--host=0.0.0.0"]

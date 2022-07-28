@@ -1,37 +1,27 @@
-import sys, subprocess, os, socketserver, json
+import sys, os, subprocess
 
-class MyTCPHandler(socketserver.BaseRequestHandler):
-    root_path = os.environ.get('ROOT_PATH') if os.environ.get('ROOT_PATH') else b''
+def getdiskusage(path):
+    root_path = os.environ.get('ROOT_PATH') if os.environ.get('ROOT_PATH') else '/'
+    response = dict(files=[])
 
-    def handle(self):
-        data, out = self.request.recv(1024).split(b'\n'), {}
-        r_path = self.root_path if type(self.root_path) == bytes else self.root_path.encode()
+    if os.path.exists(root_path + path):
+        process_output = subprocess.run([
+            'find', root_path + path, '-type', 'f', '-exec', 'du', '-a', '{}', '+'
+        ], capture_output=True)
 
-        if data:
-            method, path, protocol = data.pop(0).split(b' ')
-            if method == b'GET':
-                if os.path.exists(r_path + path):
-                    process_output = subprocess.run([
-                        'find', r_path + path, '-type', 'f', '-exec', 'du', '-a', '{}', '+'
-                    ], capture_output=True)
-                    disk_usage = process_output.stdout.splitlines()
+        disk_usage = process_output.stdout.splitlines()
 
-                    for file in disk_usage:
-                        f_bytes, f_name = file.split('\t'.encode())
-                        out[f_name.decode('utf-8')] = int(f_bytes)
-        
-        self.request.sendall(b'{ "files": ' + json.dumps(out).encode() + b'}')
+        for file in disk_usage:
+            f_bytes, f_name = file.split('\t'.encode())
+            file_object = { f_name.decode() : int(f_bytes) }
+            response['files'].append(file_object)
+
+    return response
 
 if __name__ == '__main__':
+    from pprint import pprint
 
-    HOST = os.environ.get('HOST')
-    if not HOST: 
-        HOST = '0.0.0.0'
-
-    PORT = os.environ.get('PORT')
-    if not PORT: 
-        PORT = 9999
-
-    with socketserver.TCPServer((HOST, PORT), MyTCPHandler) as server:
-        server.serve_forever()
-
+    if len(sys.argv) != 2:
+        raise ValueError('Please provide a single path argument')
+    else:
+        pprint(getdiskusage(sys.argv[1]))
