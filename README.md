@@ -1,5 +1,5 @@
 # Summary
-Remote Tools is a runnable socket server inside a Docker container. It is a toolset used to expose limited information to developers who do not have ssh access to the VM/server it is running on. It consumes a mount point provided in a GET request uri and returns a json object containing file names and their disk usage in bytes. 
+Remote Access is a runnable socket server inside a Docker container. It is a toolset used to expose limited information to developers who do not have ssh access to the VM/server it is running on. It consumes a mount point provided in a GET request uri and returns a json object containing file names and their disk usage in bytes. The module for getting disk usage can also be run as a standalone script, or as a part of an API. 
 
 ## HOW TO TEST PYTHON MODULE
 ```sh
