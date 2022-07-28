@@ -38,16 +38,16 @@ Remote Access is a runnable socket server inside a Docker container. It is a too
 
 ### Request
 ```sh
-  $ curl http://localhost:5000/app
+  $ curl http://localhost:5000/diskusage/app
 ```
 ### Response
 ```sh
   {
-    "files": {
-      "/app/Dockerfile": 4,
-      "/app/getdiskusage.py": 4,
-      "/app/README.md": 4,
-      ...
+    'files': [{'/app/Dockerfile': 4},
+              {'/app/getdiskusage.py': 4},
+              {/app/README.md': 4},
+              ...
+              ]
     }
   }
 ```
