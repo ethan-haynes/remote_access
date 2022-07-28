@@ -14,6 +14,16 @@ Remote Access is a runnable socket server inside a Docker container. It is a too
     }
 ```
 
+## HOW TO RUN UNIT TESTS FOR PYTHON MODULE
+```sh
+  $ python3 test_getdiskusage.py 
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.007s
+
+OK
+```
+
 ## HOW TO TEST APP SERVER
 ```sh
   $ export ROOT_PATH="$(dirname `pwd`)/"
