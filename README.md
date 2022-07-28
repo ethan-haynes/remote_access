@@ -45,7 +45,7 @@ Remote Access is a runnable socket server inside a Docker container. It is a too
   {
     'files': [{'/app/Dockerfile': 4},
               {'/app/getdiskusage.py': 4},
-              {/app/README.md': 4},
+              {'/app/README.md': 4},
               ...
               ]
     }
