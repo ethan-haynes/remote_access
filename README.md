@@ -28,7 +28,7 @@ OK
 ```sh
   $ export ROOT_PATH="$(dirname `pwd`)/"
   $ flask run --host=0.0.0.0 
-  $ curl http://localhost:5000/remote_access
+  $ curl http://localhost:5000/diskusage/remote_access
     {'files': [{'/root/user/remote_access/requirements.txt': 8},
                {'/root/user/remote_access/Dockerfile': 8},
                {'/root/user/remote_access/getdiskusage.py': 8},
